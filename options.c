@@ -23,10 +23,25 @@ int command_ls(void)
 	}
 
 	files_stream(&files, &dir_files, &dir_names, &errors);
-	print_error(errors);
-	print_files(files, 0, 0, '\n');
-	_putchar('\n');
-	print_dirs(dir_files, 0, 0, '\n');
+
+	while (dir_files != NULL)
+	{
+		if (dir_files->namefile[0] != '.')
+		{
+			if (flag_current.colnum == 1)
+			{
+				fprintf(stdout, "%s\n", dir_files->namefile);
+			}
+			else
+			{
+				fprintf(stdout, "%s ", dir_files->namefile);
+			}
+		}
+		
+		dir_files = dir_files->next;
+	}
+	printf("\n");
+
 	free_all(&files, &dir_files, &dir_names, &errors);
 
 	return (EXIT_SUCCESS);
